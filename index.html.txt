@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UKP Hub - Feedback</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .profile-section {
+            margin-bottom: 30px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            border: 3px solid white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .profile-id {
+            font-size: 14px;
+            color: #888;
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .rating-section {
+            margin-bottom: 30px;
+        }
+
+        .rating-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .stars-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .star {
+            font-size: 40px;
+            color: white;
+            text-shadow: 0 0 0 #ddd;
+            -webkit-text-stroke: 1px #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .star:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+        }
+
+        .star.active {
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            -webkit-text-stroke: 1px #ffd700;
+        }
+
+        .rating-text {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+
+        .feedback-form {
+            margin-bottom: 30px;
+        }
+
+        .feedback-textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 100px;
+            transition: border-color 0.3s ease;
+        }
+
+        .feedback-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .affiliate-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .affiliate-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .affiliate-container {
+            overflow-x: auto;
+            overflow-y: hidden;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            scrollbar-width: thin;
+            scrollbar-color: #667eea #f1f1f1;
+        }
+
+        .affiliate-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .affiliate-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .affiliate-container::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .affiliate-container::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        .affiliate-grid {
+            display: flex;
+            gap: 15px;
+            min-width: max-content;
+            padding: 5px;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .affiliate-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 140px;
+            flex-shrink: 0;
+            transform: translateZ(0);
+        }
+
+        .affiliate-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+            z-index: 10;
+        }
+
+        .affiliate-card:nth-child(odd) {
+            animation-delay: 0.1s;
+        }
+
+        .affiliate-card:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .affiliate-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .affiliate-name {
+            font-size: 12px;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+        .affiliate-price {
+            font-size: 11px;
+            color: #ff6b35;
+            font-weight: bold;
+        }
+
+        .affiliate-disclaimer {
+            font-size: 10px;
+            color: #888;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+           
+            .star {
+                font-size: 35px;
+            }
+           
+            .title {
+                font-size: 20px;
+            }
+
+            .affiliate-container {
+                overflow-x: auto;
+                margin: 0 -10px;
+                padding: 10px 10px;
+            }
+
+            .affiliate-grid {
+                gap: 10px;
+                padding: 5px 5px;
+            }
+
+            .affiliate-card {
+                padding: 10px;
+                min-width: 120px;
+            }
+
+            .affiliate-image {
+                width: 60px;
+                height: 60px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">UKP Hub Shopee Express</h1>
+            <p class="subtitle">ID 163107</p>
+        </div>
+
+        <div class="profile-section">
+            <div class="avatar">MA</div>
+            <div class="profile-name">Muhammad bin Ahmad</div>
+            <div class="profile-id">Service Provider</div>
+        </div>
+
+        <div class="rating-section">
+            <h2 class="rating-title">How would you rate our service?</h2>
+            <div class="stars-container">
+                <span class="star" data-rating="1">⭐</span>
+                <span class="star" data-rating="2">⭐</span>
+                <span class="star" data-rating="3">⭐</span>
+                <span class="star" data-rating="4">⭐</span>
+                <span class="star" data-rating="5">⭐</span>
+            </div>
+            <div class="rating-text" id="ratingText">Click on stars to rate</div>
+        </div>
+
+        <div class="feedback-form">
+            <textarea class="feedback-textarea" placeholder="Tell us about your experience... (optional)" id="feedbackText"></textarea>
+        </div>
+
+        <button class="submit-btn" onclick="submitFeedback()">Submit Feedback</button>
+       
+        <div class="success-message" id="successMessage">
+            <strong>Thank you!</strong> Your feedback has been submitted successfully.
+        </div>
+
+        <div class="affiliate-section">
+            <h3 class="affiliate-title">Recommended Products</h3>
+            <div class="affiliate-container">
+                <div class="affiliate-grid">
+                    <a href="https://s.shopee.com.my/9ADj4p0UPH" target="_blank" class="affiliate-card">
+                        <div class="affiliate-image">🐱</div>
+                        <div class="affiliate-name">Makanan Kucing 10KG</div>
+                        <div class="affiliate-price">From RM 55.00</div>
+                    </a>
+                    <a href="https://s.shopee.com.my/zU9xoE8K" target="_blank" class="affiliate-card">
+                        <div class="affiliate-image">👝</div>
+                        <div class="affiliate-name">Sling Beg Wanita</div>
+                        <div class="affiliate-price">From RM 12.00</div>
+                    </a>
+                    <a href="https://s.shopee.com.my/4flLBPU2Op" target="_blank" class="affiliate-card">
+                        <div class="affiliate-image">👶🏻</div>
+                        <div class="affiliate-name">Pampers</div>
+                        <div class="affiliate-price">From RM 103.29</div>
+                    </a>
+                    <a href="https://s.shopee.com.my/40VcvIP1Ry" target="_blank" class="affiliate-card">
+                        <div class="affiliate-image">💄</div>
+                        <div class="affiliate-name">Beauty Products</div>
+                        <div class="affiliate-price">From RM 15.00</div>
+                    </a>
+                    <a href="https://s.shopee.com.my/8fHTwfj4kf" target="_blank" class="affiliate-card">
+                        <div class="affiliate-image">🎮</div>
+                        <div class="affiliate-name">Smartwatch</div>
+                        <div class="affiliate-price">From RM 149.00</div>
+                    </a>
+                    <a href="👝" target="_blank" class="affiliate-card">
+                        <div class="affiliate-image">🍼</div>
+                        <div class="affiliate-name">Tumbler</div>
+                        <div class="affiliate-price">From RM 10.08</div>
+                    </a>
+                    <a href="https://s.shopee.com.my/7piMx3wvhq" target="_blank" class="affiliate-card">
+                        <div class="affiliate-image">🏃🏻‍♀️</div>
+                        <div class="affiliate-name">Treadmill</div>
+                        <div class="affiliate-price">From RM 231.83</div>
+                    </a>
+                </div>
+            </div>
+            <p class="affiliate-disclaimer">Your support helps us provide better service.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentRating = 0;
+        const stars = document.querySelectorAll('.star');
+        const ratingText = document.getElementById('ratingText');
+
+        const ratingMessages = {
+            1: "Poor - We'll do better next time",
+            2: "Fair - Room for improvement",
+            3: "Good - Thanks for your feedback",
+            4: "Very Good - We're glad you're satisfied",
+            5: "Excellent - Thank you for the amazing review!"
+        };
+
+        // Add event listeners to stars
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                currentRating = parseInt(this.getAttribute('data-rating'));
+                updateStars();
+                updateRatingText();
+            });
+
+            // Remove hover effect that interferes with click behavior
+            star.addEventListener('mouseenter', function() {
+                if (currentRating === 0) {
+                    const hoverRating = parseInt(this.getAttribute('data-rating'));
+                    highlightStars(hoverRating);
+                }
+            });
+        });
+
+        // Reset stars on mouse leave only if no rating is selected
+        document.querySelector('.stars-container').addEventListener('mouseleave', function() {
+            if (currentRating === 0) {
+                clearStars();
+            } else {
+                updateStars();
+            }
+        });
+
+        function highlightStars(rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function clearStars() {
+            stars.forEach(star => {
+                star.classList.remove('active');
+            });
+        }
+
+        function updateStars() {
+            stars.forEach((star, index) => {
+                if (index < currentRating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function updateRatingText() {
+            if (currentRating > 0) {
+                ratingText.textContent = ratingMessages[currentRating];
+            } else {
+                ratingText.textContent = "Click on stars to rate";
+            }
+        }
+
+        function submitFeedback() {
+            const feedbackText = document.getElementById('feedbackText').value;
+            const successMessage = document.getElementById('successMessage');
+
+            if (currentRating === 0) {
+                alert('Please select a rating before submitting!');
+                return;
+            }
+
+            // Simulate form submission
+            console.log('Feedback submitted:', {
+                rating: currentRating,
+                feedback: feedbackText,
+                serviceProvider: 'Muhammad bin Ahmad',
+                serviceId: '163107'
+            });
+
+            // Show success message
+            successMessage.style.display = 'block';
+           
+            // Reset form after 3 seconds
+            setTimeout(() => {
+                currentRating = 0;
+                updateStars();
+                updateRatingText();
+                document.getElementById('feedbackText').value = '';
+                successMessage.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
