@@ -38,7 +38,7 @@ git clone https://github.com/yourusername/ukp-hub-feedback.git
 
 2. Navigate to the project directory:
 ```bash
-cd ukp-hub-feedback
+cd courier-feedback
 ```
 
 3. Open `index.html` in your browser or serve it using a local server.
